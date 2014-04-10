@@ -2,8 +2,6 @@
 
 import rtmidi
 
-from buttonlistener import ButtonListener 
-
 
 class MidiButtonListener(object):
 	
