@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
+<interface>
+  <requires lib="gtk+" version="3.12"/>
+  <object class="GtkWindow" id="MainWindow">
+    <property name="can_focus">False</property>
+    <property name="opacity">0.92000000000000004</property>
+    <property name="title" translatable="yes">Video Controller</property>
+    <property name="default_width">443</property>
+    <property name="default_height">250</property>
+    <signal name="delete-event" handler="MainWindowDelete" swapped="no"/>
+    <child>
+      <object class="GtkLayout" id="layout1">
+        <property name="width_request">490</property>
+        <property name="height_request">370</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="halign">center</property>
+        <property name="valign">center</property>
+        <property name="width">0</property>
+        <property name="height">0</property>
+        <child>
+          <object class="GtkToggleButton" id="MaxCam3Button">
+            <property name="label" translatable="yes">Maximize
+Cam 3</property>
+            <property name="width_request">150</property>
+            <property name="height_request">150</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="toggled" handler="MaxCam3ButtonToggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">330</property>
+            <property name="y">10</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="MaxCam1Button">
+            <property name="label" translatable="yes">Maximize
+Cam1</property>
+            <property name="width_request">150</property>
+            <property name="height_request">150</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="toggled" handler="MaxCam1ButtonToggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">10</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="MaxCam2Button">
+            <property name="label" translatable="yes">Maximize
+Cam 2</property>
+            <property name="width_request">150</property>
+            <property name="height_request">150</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="toggled" handler="MaxCam2ButtonToggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">170</property>
+            <property name="y">10</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="SetTextLabel">
+            <property name="width_request">130</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">3</property>
+            <property name="label" translatable="yes">Set text</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">170</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="SetTextButton">
+            <property name="label" translatable="yes">Set Text</property>
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="SetTextButtonClicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">340</property>
+            <property name="y">174</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="StartTimerLabel">
+            <property name="width_request">130</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Start a new timer</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">220</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="StartTimerEnty">
+            <property name="width_request">180</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="x">150</property>
+            <property name="y">220</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="SetTextEntry">
+            <property name="width_request">180</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="x">150</property>
+            <property name="y">174</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="StartTimerButton">
+            <property name="label" translatable="yes">Start Timer</property>
+            <property name="width_request">120</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="StartTimerButtonClicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">340</property>
+            <property name="y">220</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="ChangeTimerLabel">
+            <property name="width_request">150</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Change timer dispaly</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">270</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="ChangeTimerComboBox">
+            <property name="width_request">290</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <signal name="changed" handler="ChangeTimerComboBoxChanged" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">170</property>
+            <property name="y">270</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="HideTextButton">
+            <property name="label" translatable="yes">Hide text</property>
+            <property name="width_request">200</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">320</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="HideTimer">
+            <property name="label" translatable="yes">Hide Timer</property>
+            <property name="width_request">200</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">230</property>
+            <property name="y">320</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
