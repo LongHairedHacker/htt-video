@@ -38,10 +38,20 @@ OUTPUTFORMAT=$VIDEO', width=1024, height=768'
 
 while true ; do
   gst-launch-0.10 -v shmsrc socket-path=$ctrsocket do-timestamp=true is-live=true ! \
-    $MIXERFORMAT            ! \
+    $MIXERFORMAT        ! \
     videoscale		    ! \
     $OUTPUTFORMAT	    ! \
     $VIDEOCONVERT	    ! \
-    ximagesink
+	tee name=atee		! \
+	queue				! \
+    ximagesink          \
+	atee.				!\
+	queue				!\
+	timeoverlay			!\
+	ffmpegcolorspace	!\
+	'video/x-raw-yuv'   !\
+	jpegenc 			!\
+	rtpjpegpay			!\
+	udpsink host=192.168.11.90 port=9998 sync=true 
   sleep 2
 done
