@@ -39,7 +39,8 @@ OUTPUTFORMAT=$VIDEO', width=1024, height=768'
 while true ; do
   gst-launch-0.10 -v shmsrc socket-path=$ctrsocket do-timestamp=true is-live=true ! \
     $MIXERFORMAT        ! \
-    videoscale		    ! \
+    queue leaky=2		!\
+	videoscale		    ! \
     $OUTPUTFORMAT	    ! \
     $VIDEOCONVERT	    ! \
 	tee name=atee		! \
