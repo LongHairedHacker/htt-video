@@ -110,7 +110,7 @@ Cam 2</property>
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="StartTimerEnty">
+          <object class="GtkEntry" id="StartTimerEntry">
             <property name="width_request">180</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
@@ -162,19 +162,6 @@ Cam 2</property>
           </packing>
         </child>
         <child>
-          <object class="GtkComboBoxText" id="ChangeTimerComboBox">
-            <property name="width_request">290</property>
-            <property name="height_request">30</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <signal name="changed" handler="ChangeTimerComboBoxChanged" swapped="no"/>
-          </object>
-          <packing>
-            <property name="x">170</property>
-            <property name="y">270</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkButton" id="HideTextButton">
             <property name="label" translatable="yes">Hide text</property>
             <property name="width_request">200</property>
@@ -182,6 +169,7 @@ Cam 2</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <signal name="clicked" handler="HideTextButtonClicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">10</property>
@@ -196,10 +184,24 @@ Cam 2</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <signal name="clicked" handler="HideTimerButtonClicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">230</property>
             <property name="y">320</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="ChangeTimerComboBox">
+            <property name="width_request">285</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <signal name="changed" handler="ChangeTimerComboBoxChanged" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">174</property>
+            <property name="y">270</property>
           </packing>
         </child>
       </object>

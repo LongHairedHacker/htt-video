@@ -1,12 +1,10 @@
 #!/bin/env python2
-import socket
 
-class SceneChange(object):
+class SceneChanger(object):
 
-	def __init__(self):
+	def __init__(self, socket):
 		self.cur_scene = 1
-		self.snowmix_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.snowmix_socket.connect(("localhost", 9999))
+		self.snowmix_socket = socket
 
 
 	def switch_to(self, next_scene):
