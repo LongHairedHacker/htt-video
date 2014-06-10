@@ -3,17 +3,17 @@
 
 import sys
 import socket
-from gi.repository import Gtk
+from gi.repository import Gtk, GObject
 
 from scenechanger import SceneChanger
 from textchanger import TextChanger
 from timercontroller import TimerController
 
-class VideoController:
-	def __init__(self):
+class VideoController(object):
+	def __init__(self, ip):
 		
 		self.snowmix_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.snowmix_socket.connect(("localhost", 9999))
+		self.snowmix_socket.connect((ip, 9999))
 
 		self.scenechanger = SceneChanger(self.snowmix_socket)
 		self.textchanger = TextChanger(self.snowmix_socket)
@@ -99,5 +99,10 @@ class VideoController:
 		self.messagebox.hide()
 		return True
 
-videocontroller = VideoController()
+if len(sys.argv) != 2:
+	print "Usage %s <remote ip>" % sys.argv[0]
+	sys.exit(-1)
+
+videocontroller = VideoController(sys.argv[1])
+GObject.threads_init()
 Gtk.main()

@@ -2,6 +2,13 @@
 # Deliver mixer1 output to screen.
 # Taken from the original snowmix sources
 
+if [ -z "$1" ]; then
+	echo "Usage $0 <remote ip>"
+	exit
+fi
+
+remote_ip="$1"
+
 tmpfile=/tmp/output2screen.tmp.$$
 echo 'system info' | nc 127.0.0.1 9999 >$tmpfile
 geometry=`grep 'STAT:  System geometry' $tmpfile |cut -f3 -d: |cut -f2 -d' '|tr 'x' ' '`
@@ -53,6 +60,6 @@ while true ; do
 	'video/x-raw-yuv'   !\
 	jpegenc 			!\
 	rtpjpegpay			!\
-	udpsink host=192.168.11.90 port=9998 sync=true 
+	udpsink host=$remote_ip port=9998 sync=true 
   sleep 2
 done
