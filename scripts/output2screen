@@ -1,6 +1,7 @@
 #!/bin/bash
 # Deliver mixer1 output to screen.
 # Taken from the original snowmix sources
+# USE OPEN-BSD NETCAT OTHERWISE THINGS KEEP BLOCKING
 
 if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
 	echo "Usage $0 <remote ip> <width> <height>"
@@ -8,8 +9,8 @@ if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
 fi
 
 remote_ip="$1"
-width="$2"
-height="$3"
+outwidth="$2"
+outheight="$3"
 
 tmpfile=/tmp/output2screen.tmp.$$
 echo 'system info' | nc 127.0.0.1 9999 >$tmpfile
@@ -19,7 +20,6 @@ ctrsocket=`grep 'STAT:  Output ctr socket' $tmpfile |cut -f3 -d: |cut -f2 -d' '`
 
 rm $tmpfile
 
-VIDEOCONVERT=ffmpegcolorspace
 VIDEO=video/x-raw-rgb
 AUDIO=audio/x-raw-int
 
@@ -42,21 +42,21 @@ width=`echo $geometry |cut -f1 -d' '`
 height=`echo $geometry |cut -f2 -d' '`
 
 MIXERFORMAT=$VIDEO', bpp=(int)32, depth=(int)32, endianness=(int)4321, format=(fourcc)BGRA, red_mask=(int)65280, green_mask=(int)16711680, blue_mask=(int)-16777216, width=(int)'$width', height=(int)'$height', framerate=(fraction)'$ratefraction', pixel-aspect-ratio=(fraction)1/1, interlaced=(boolean)false'
-OUTPUTFORMAT=$VIDEO', width='$width', height='$height
+OUTPUTFORMAT=$VIDEO', width='$outwidth', height='$outheight
 
 
 while true ; do
   gst-launch-0.10 -v shmsrc socket-path=$ctrsocket do-timestamp=true is-live=true ! \
     $MIXERFORMAT        ! \
     queue leaky=2		!\
+	tee name=atee		! \
 	videoscale		    ! \
     $OUTPUTFORMAT	    ! \
-    $VIDEOCONVERT	    ! \
-	tee name=atee		! \
+    ffmpegcolorspace	! \
 	queue				! \
     ximagesink          \
 	atee.				!\
-	queue				!\
+	queue leaky=2		!\
 	timeoverlay			!\
 	ffmpegcolorspace	!\
 	'video/x-raw-yuv'   !\
