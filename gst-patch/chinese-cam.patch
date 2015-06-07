@@ -1,0 +1,20 @@
+
+
+---
+diff --git a/gst-libs/gst/rtsp/gstrtspmessage.c b/gst-libs/gst/rtsp/gstrtspmessage.c
+index 2b33c61..585d126 100644
+--- a/gst-libs/gst/rtsp/gstrtspmessage.c
++++ b/gst-libs/gst/rtsp/gstrtspmessage.c
+@@ -183,7 +183,13 @@ gst_rtsp_message_init_request (GstRTSPMessage * msg, GstRTSPMethod method,
+ 
+   msg->type = GST_RTSP_MESSAGE_REQUEST;
+   msg->type_data.request.method = method;
++
+   msg->type_data.request.uri = g_strdup (uri);
++  guint len = strlen(msg->type_data.request.uri);
++  if(msg->type_data.request.uri[len-1] == '/') {
++    msg->type_data.request.uri[len-1] = 0;
++  }
++
+   msg->type_data.request.version = GST_RTSP_VERSION_1_0;
+   msg->hdr_fields = g_array_new (FALSE, FALSE, sizeof (RTSPKeyValue));

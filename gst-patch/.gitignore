@@ -1,0 +1,4 @@
+*.pkg.tar.xz
+gst-plugins-base
+pkg
+src
