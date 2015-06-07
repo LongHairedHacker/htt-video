@@ -6,10 +6,14 @@ MIXERFORMAT='video/x-raw-rgb, bpp=(int)32, endianness=(int)4321, format=(fourcc)
 SRC="rtspsrc location=rtsp://192.168.1.100 ! rtph264depay ! h264parse ! ffdec_h264"
 SCALE='ffmpegcolorspace ! videorate ! videoscale ! ffmpegcolorspace'
 
-gst-launch-0.10 -v    \
+SINK='ximagesink'
+SINK='shmsink socket-path=/tmp/feed1 shm-size=10000 wait-for-connection=0'
+
+
+
+gst-launch-0.10 -v   \
 	$SRC            !\
 	$SCALE 			!\
 	$MIXERFORMAT	!\
-    ximagesink
-
+    $SINK
 
