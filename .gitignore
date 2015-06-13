@@ -3,3 +3,4 @@ images/logo.*
 python/virtenv
 videos
 *.pyc
+*.swp
