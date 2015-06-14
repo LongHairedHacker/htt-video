@@ -11,12 +11,11 @@ from feed import Feed
 
 from config import *
 
-class CameraFeed(Feed):
-	def __init__(self, feed_pipe, camera_ip):
-		super(CameraFeed, self).__init__(feed_pipe)
 
-		self._feed_pipe = feed_pipe
-		self._camera_ip = camera_ip
+class OutputFeed(Feed):
+	def __init__(self):
+		super(OutputFeed, self).__init__(MIXER_PIPE)
+
 
 	def start(self):
 		if self.is_running():
@@ -26,9 +25,6 @@ class CameraFeed(Feed):
 			print '[%s] not starting because mixer is not running (pipe is missing)' % self._name
 			return
 
-		if os.path.exists(self._feed_pipe):
-			print '[%s] not starting because feed pipe already exists' % self._name
-			return
 		
 		print '[%s] is starting' % self._name
 		self._running = True
@@ -37,11 +33,18 @@ class CameraFeed(Feed):
 
 
 	def _run(self):
-		src = FEED_SOURCE % {'ip': self._camera_ip}
+		src = OUTPUT_SOURCE % {'mixer_pipe' : MIXER_PIPE}
 		mixer_format = MIXER_FORMAT % {'width' : MIXER_WIDTH, 'height' : MIXER_HEIGHT, 'framerate' : MIXER_FRAMERATE}
-		sink = FEED_SINK % {'feed_pipe' : self._feed_pipe, 'shm_size' : SHM_SIZE}
+		screen_output = SCREEN_OUTPUT % {'screen_width': SCREEN_WIDTH, 'screen_height': SCREEN_HEIGHT}
 
-		self._pipeline = gst.parse_launch('%s ! %s ! %s ! %s' % (src, SCALE, mixer_format, sink))
+		pipeline = '%s ! %s ! queue leaky=2 ! tee name=split ! queue ! %s split. ! queue ! %s' % (src, 
+																									mixer_format, 
+																									screen_output,
+																									NETWORK_OUTPUT)
+		print pipeline
+		self._pipeline = gst.parse_launch(pipeline)
+
+
 
 		self._pipeline.set_state(gst.STATE_PLAYING)
 		print "[%s] is playing" % self._name

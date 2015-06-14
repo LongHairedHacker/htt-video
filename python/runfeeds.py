@@ -6,6 +6,7 @@ import time
 import gobject
 
 from camerafeed import CameraFeed
+from outputfeed import OutputFeed
 
 from config import *
 
@@ -27,6 +28,8 @@ signal.signal(signal.SIGINT, handle_sigint)
 
 for pipe, ip in CAMERA_FEEDS.items():
 	feeds.append(CameraFeed(pipe, ip))
+
+feeds.append(OutputFeed())
 
 while os.path.exists(MIXER_PIPE):
 	for feed in feeds:
