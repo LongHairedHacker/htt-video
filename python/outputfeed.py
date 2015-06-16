@@ -35,12 +35,13 @@ class OutputFeed(Feed):
 	def _run(self):
 		src = OUTPUT_SOURCE % {'mixer_pipe' : MIXER_PIPE}
 		mixer_format = MIXER_FORMAT % {'width' : MIXER_WIDTH, 'height' : MIXER_HEIGHT, 'framerate' : MIXER_FRAMERATE}
-		screen_output = SCREEN_OUTPUT % {'screen_width': SCREEN_WIDTH, 'screen_height': SCREEN_HEIGHT}
+		screen_output = SCREEN_OUTPUT % {'screen_width' : SCREEN_WIDTH, 'screen_height' : SCREEN_HEIGHT}
+		network_output = NETWORK_OUTPUT % {'port' : OUTPUT_PORT}
 
-		pipeline = '%s ! %s ! queue leaky=2 ! tee name=split ! queue ! %s split. ! queue ! %s' % (src, 
+		pipeline = '%s ! %s ! queue leaky=2 ! tee name=split ! queue leaky=2 ! %s split. ! queue leaky=2 ! %s' % (src, 
 																									mixer_format, 
 																									screen_output,
-																									NETWORK_OUTPUT)
+																									network_output)
 		print pipeline
 		self._pipeline = gst.parse_launch(pipeline)
 

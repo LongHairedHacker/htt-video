@@ -15,6 +15,7 @@ SHM_SIZE = 10000000
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 360
+OUTPUT_PORT = 6666
 
 
 
@@ -29,7 +30,7 @@ FEED_SINK = 'shmsink socket-path=%(feed_pipe)s shm-size=%(shm_size)d wait-for-co
 OUTPUT_SOURCE = 'shmsrc socket-path=%(mixer_pipe)s do-timestamp=true is-live=true'
 SCREEN_OUTPUT = 'videoscale ! video/x-raw-rgb, width=%(screen_width)d, height=%(screen_height)d !'\
 				+ ' timeoverlay ! ximagesink'
-NETWORK_OUTPUT = 'fakesink'
+NETWORK_OUTPUT = 'ffmpegcolorspace ! timeoverlay ! x264enc tune="zerolatency" ! mpegtsmux ! tcpserversink host=0.0.0.0 port=%(port)d'
 
 
 
