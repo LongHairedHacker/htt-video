@@ -6,7 +6,7 @@ from datetime import datetime
 
 class ClockController(object):
 
-	TEXT_ID = 0
+	TEXT_ID = 1
 
 	def __init__(self, socket):
 		self.snowmix_socket = socket
