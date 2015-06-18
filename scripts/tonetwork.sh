@@ -6,7 +6,7 @@ SRC="filesrc location=../videos/tears_of_steel_720p.mkv ! matroskademux ! h264pa
 
 SCALE='ffmpegcolorspace ! videoscale ! ffmpegcolorspace'
 
-NETWORK='queue ! timeoverlay ! ffmpegcolorspace ! x264enc tune="zerolatency" ! mpegtsmux ! tcpserversink host=0.0.0.0 port=6666'
+NETWORK='timeoverlay ! ffmpegcolorspace ! x264enc tune="zerolatency" ! mpegtsmux ! tcpserversink host=0.0.0.0 port=6666'
 
 gst-launch-0.10 -v    \
 	$SRC            !\
