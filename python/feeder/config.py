@@ -1,8 +1,8 @@
 #!/bin/env python2
 
 CAMERA_FEEDS = {
-	'/tmp/feed1' : '192.168.1.100', 
-	'/tmp/feed2' : '192.168.1.101', 
+	'/tmp/feed1' : '192.168.1.100',
+	'/tmp/feed2' : '192.168.1.101',
 	'/tmp/feed3' : '192.168.1.102',
 }
 
@@ -31,6 +31,3 @@ OUTPUT_SOURCE = 'shmsrc socket-path=%(mixer_pipe)s do-timestamp=true is-live=tru
 SCREEN_OUTPUT = 'videoscale ! video/x-raw-rgb, width=%(screen_width)d, height=%(screen_height)d !'\
 				+ ' timeoverlay ! ximagesink'
 NETWORK_OUTPUT = 'ffmpegcolorspace ! timeoverlay ! x264enc tune="zerolatency" ! mpegtsmux ! tcpserversink host=0.0.0.0 port=%(port)d'
-
-
-
