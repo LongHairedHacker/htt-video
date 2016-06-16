@@ -3,9 +3,9 @@ import os
 import threading
 from time import sleep
 
-import pygst
-pygst.require('0.10')
-import gst
+import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import  Gst
 
 from feed import Feed
 
@@ -29,10 +29,10 @@ class CameraFeed(Feed):
 		if os.path.exists(self._feed_pipe):
 			print '[%s] not starting because feed pipe already exists' % self._name
 			return
-		
+
 		print '[%s] is starting' % self._name
 		self._running = True
-		self._thread = threading.Thread(target=self._run)		
+		self._thread = threading.Thread(target=self._run)
 		self._thread.start()
 
 
@@ -41,17 +41,19 @@ class CameraFeed(Feed):
 		mixer_format = MIXER_FORMAT % {'width' : MIXER_WIDTH, 'height' : MIXER_HEIGHT, 'framerate' : MIXER_FRAMERATE}
 		sink = FEED_SINK % {'feed_pipe' : self._feed_pipe, 'shm_size' : SHM_SIZE}
 
-		self._pipeline = gst.parse_launch('%s ! %s ! %s ! %s' % (src, SCALE, mixer_format, sink))
+		print '%s ! %s ! %s ! %s' % (src, SCALE, mixer_format, sink)
 
-		self._pipeline.set_state(gst.STATE_PLAYING)
+		self._pipeline = Gst.parse_launch('%s ! %s ! %s ! %s' % (src, SCALE, mixer_format, sink))
+
+		self._pipeline.set_state(Gst.State.PLAYING)
 		print "[%s] is playing" % self._name
 
 		bus = self._pipeline.get_bus()
-		msg = bus.timed_pop_filtered(gst.CLOCK_TIME_NONE, gst.MESSAGE_ERROR | gst.MESSAGE_EOS)
+		msg = bus.timed_pop_filtered(Gst.CLOCK_TIME_NONE, Gst.MessageType.ERROR | Gst.MessageType.EOS)
 		print "[%s] %s" % (self._name, msg.parse_error()[1])
 
-		self._pipeline.set_state(gst.STATE_NULL)
+		self._pipeline.set_state(Gst.State.NULL)
 
 		self._running = False
-		
+
 		print "[%s] has stopped" % self._name

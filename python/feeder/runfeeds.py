@@ -3,7 +3,10 @@ import os
 import sys
 import signal
 import time
-import gobject
+
+import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import  Gst,GObject
 
 from camerafeed import CameraFeed
 from outputfeed import OutputFeed
@@ -23,7 +26,8 @@ def handle_sigint(signum, frame):
 	sys.exit(0)
 
 
-gobject.threads_init()
+GObject.threads_init()
+Gst.init(None)
 signal.signal(signal.SIGINT, handle_sigint)
 
 for pipe, ip in CAMERA_FEEDS.items():
@@ -35,7 +39,7 @@ while os.path.exists(MIXER_PIPE):
 	for feed in feeds:
 		if not feed.is_running():
 			feed.start()
-	
+
 	time.sleep(5)
 
 teardown()
